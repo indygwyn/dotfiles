@@ -104,6 +104,10 @@ function solve () {
 	echo "$*" | bc -l; 
 }
 
+function fromepoch {
+	perl -e "require 'ctime.pl'; print &ctime($1);"
+}
+
 function historyawk() { 
 	history | 
 	awk '{a[$2]++}END{for(i in a){printf"%5d\t%s\n",a[i],i}}' |
