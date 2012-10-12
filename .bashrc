@@ -51,6 +51,12 @@ alias today='date +"%A, %B %d, %Y"'
 alias yest='date -v-1d +"%A %B %d, %Y"'
 alias epoch='date +%s'
 
+# git
+alias ga='git add'
+alias gs='git status'
+alias gd='git diff'
+alias github="open \`git config -l | grep 'remote.origin.url' | sed -En 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/p'\`"
+
 export PROMPT_COMMAND=bashprompt # use the bashprompt function to set prompts
 function bashprompt {
 	history -a
