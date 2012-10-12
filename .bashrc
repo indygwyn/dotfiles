@@ -55,7 +55,8 @@ alias epoch='date +%s'
 alias ga='git add'
 alias gs='git status'
 alias gd='git diff'
-alias github="open \`git config -l | grep 'remote.origin.url' | sed -En 's/remote.origin.url=git(@|:\/\/)github.com(:|\/)(.+)\/(.+).git/https:\/\/github.com\/\3\/\4/p'\`"
+alias gc='git commit'
+alias gp='git push'
 
 export PROMPT_COMMAND=bashprompt # use the bashprompt function to set prompts
 function bashprompt {
