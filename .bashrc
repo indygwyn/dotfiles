@@ -4,6 +4,7 @@ shopt -s cmdhist		# save multiline cmds in history
 shopt -s cdspell		# spellcheck cd
 set -o vi			# use a vi-style command line editing interface
 set -o noclobber		# no clobber of files on redirect >| override
+shopt -s extglob		# bash extended globbing
 
 export CLICOLOR=1		# colorize ls
 export LESS='-X -R -M --shift 5' # LESS no clear on exit, show RAW ANSI, long prompt, move 5 on arrow
@@ -87,7 +88,7 @@ function bashprompt {
 	local Aon_cyan="\[\e[46m\]"
 	local Aon_white="\[\e[47m\]"
 	case $TERM in
-		"ansi*"|"xterm*")
+		@(ansi|xterm)*)
 			# Change Terminal TITLE with ANSI
 			TITLEBAR='\[\e]0;\u@\h:\w\007\]'
 			;;
