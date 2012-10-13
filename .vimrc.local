@@ -1,0 +1,13 @@
+set background=dark         " must come before colorscheme
+colorscheme solarized   " https://github.com/altercation/vim-colors-solarized
+
+let os=substitute(system('uname'), '\n', '', '')
+if has("gui_running")
+    if os == 'Darwin' || os =='Mac'
+        set guifont=Source\ Code\ Pro:h13
+    elseif os == 'Linux'
+        set guifont=Inconsolata\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
