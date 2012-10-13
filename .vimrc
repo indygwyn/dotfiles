@@ -17,14 +17,15 @@ if &t_Co > 2 || has("gui_running")
 	set hlsearch
 endif
 
-" THIS NEEDS FIXED FOR OSX, UNIX, WINDOWS
+let os=substitute(system('uname'), '\n', '', '')
 if has("gui_running")
-	set guifont=Source\ Code\ Pro:h13
-"	if has("gui_gtk2")
-"		set guifont=Inconsolata\ 12
+    if os == 'Darwin' || os =='Mac'
+	    set guifont=Source\ Code\ Pro:h13
+    elseif os == 'Linux'
+		set guifont=Inconsolata\ 12
 "	elseif has("gui_win32")
 "		set guifont=Consolas:h11:cANSI
-"	endif
+	endif
 endif
 
 " In many terminal emulators the mouse works just fine, thus enable it.
