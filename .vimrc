@@ -1,36 +1,83 @@
-set backupskip=/tmp/*,/private/tmp/*" 
-set background=dark
-colorscheme solarized
-set laststatus=2
-set number
-" Objective j 
-au BufNewFile,BufRead *.j                       setf objj 
-"
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
+" => General
+" keep 100 lines of history
+set history=100
+if has("autocmd")
+	filetype plugin on	" use filetype plugins
+	filetype indent on	" use filetype indenting
+endif
+" read the file back in on external change
+set autoread
+
+" => Colors and Fonts
+" if terminal supports colors or gui
+if &t_Co > 2 || has("gui_running")
+	set background=dark	    " must come before colorscheme
+	colorscheme solarized	" https://github.com/altercation/vim-colors-solarized
+	syntax on
+	set hlsearch
 endif
 
-" Use Vim settings, rather than Vi settings (much better!).
-set nocompatible
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
+" THIS NEEDS FIXED FOR OSX, UNIX, WINDOWS
+if has("gui_running")
+	set guifont=Source\ Code\ Pro:h13
+"	if has("gui_gtk2")
+"		set guifont=Inconsolata\ 12
+"	elseif has("gui_win32")
+"		set guifont=Consolas:h11:cANSI
+"	endif
 endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+	set mouse=a
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" => VIM ui
+set nocompatible	" we are VIM not VI
+set laststatus=2	" status is 2 line
+set ruler			" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+set number		" number lines
+set backspace=indent,eol,start	" allow backspacing in insert mode
+set showmatch
+set mat=2
+set lazyredraw
+set magic
+"set noerrorbells
+"set novisualbell
+set visualbell
 
-set guifont=Source\ Code\ Pro:h13
+" => Files, backups and undo
+" centralize backups, swapfiles and undo history
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if exists("&undodir")
+	set undodir=~/.vim/undo
+endif
+if has("vms")
+	set nobackup	" VMS keeps backups
+else
+	set backup	" backup everywehre else
+endif
+set backupskip=/tmp/*,/private/tmp/* 
 
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
+" => Text, tab and indent
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+set lbr
+set tw=500
+set wrap
+set autoindent
+set smartindent
+set autoindent		" always set autoindenting on
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -38,57 +85,3 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
-endif
