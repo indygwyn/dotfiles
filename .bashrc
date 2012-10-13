@@ -29,6 +29,7 @@ alias 8='%8'
 alias 9='%9'
 
 # ls aliases
+alias sl=ls
 alias lsd='(ls -laF | fgrep "/")'
 alias lsdot.='ls -ldF .[a-zA-Z0-9]*'
 alias lsx='ls -laF | fgrep "*"'
@@ -42,6 +43,10 @@ alias lt='ls -ltr'              # sort by date
 alias lm='ls -al |more'         # pipe through 'more'
 alias tree='tree -Csu'		# nice alternative to 'ls'
 
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
 # hex to decimal and vice-versa
 alias h2d='perl -e "printf qq|%d\n|, hex(shift)"'
 alias d2h='perl -e "printf qq|%X\n|, int(shift)"'
@@ -52,11 +57,32 @@ alias yest='date -v-1d +"%A %B %d, %Y"'
 alias epoch='date +%s'
 
 # git
-alias ga='git add'
-alias gs='git status'
 alias gd='git diff'
-alias gc='git commit'
+alias gcl='git clone'
+alias ga='git add'
+alias gall='git add .'
+alias g='git'
+alias get='git'
+alias gst='git status'
+alias gs='git status'
+alias gss='git status -s'
+alias gl='git pull'
+alias gup='git fetch && git rebase'
 alias gp='git push'
+alias gpo='git push origin'
+alias gdv='git diff -w "$@" | vim -R -'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gci='git commit --interactive'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gcount='git shortlog -sn'
+alias gcp='git cherry-pick'
+alias gco='git checkout'
+alias gexport='git archive --format zip --output'
+alias gdel='git branch -D'
+alias gmu='git fetch origin -v; git fetch upstream -v; git merge upstream/master'
+alias gll='git log --graph --pretty=oneline --abbrev-commit'
 
 export PROMPT_COMMAND=bashprompt # use the bashprompt function to set prompts
 function bashprompt {
@@ -229,6 +255,24 @@ case $OSTYPE in
 		alias flushdns='dscacheutil -flushcache'
 		alias locate='mdfind -name'
 		alias ql='qlmanage -p "$@" >& /dev/null' # Quick Look alias
+        alias preview='open -a Preview'
+        alias xcode='open -a Xcode'
+        alias filemerge='open -a FileMerge'
+        alias safari='open -a Safari'
+        alias firefox='open -a Firefox'
+        alias chrome='open -a "Google Chrome"'
+        alias finder='open -a Finder '
+        alias textedit='open -a TextEdit'
+        alias hex='open -a "Hex Fiend"'
+        # homebrew
+        alias bup='brew update && brew upgrade'
+        alias bout='brew outdated'
+        alias bin='brew install'
+        alias brm='brew uninstall'
+        alias bls='brew list'
+        alias bsr='brew search'
+        alias binf='brew info'
+        alias bdr='brew doctor'
 		function pdfman () {
 			man -t $1 | open -a /Applications/Preview.app -f
 		}
