@@ -282,6 +282,13 @@ function asninfo() {
     fi
 }
 
+function surootx() {
+    xauth list | while read XAUTH ; do
+        echo "add $XAUTH" | sudo xauth
+        done
+        sudo -i
+    }
+
 # Platform Specific Aliases here
 case $OSTYPE in
     darwin*)
