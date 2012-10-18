@@ -1,6 +1,7 @@
 # .bash_profile
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
+	# This is bad, only do this on OSX cause OSX every shell is a login shell
 	. ~/.bashrc
 fi
 # User specific environment and startup programs
