@@ -1,14 +1,23 @@
+# Prefer US English and use UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
+
 export HISTCONTROL=ignoreboth   # skip space cmds and dupes in history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 shopt -s histappend             # append to history instead of overwrite
 shopt -s cmdhist                # save multiline cmds in history
 shopt -s cdspell                # spellcheck cd
+
 set -o vi                       # use a vi-style command line editing interface
 set -o noclobber                # no clobber of files on redirect >| override
 shopt -s extglob                # bash extended globbing
 
 export CLICOLOR=1               # colorize ls
 export LESS='-X -R -M --shift 5' # LESS no clear on exit, show RAW ANSI, long prompt, move 5 on arrow
-export EDITOR=/usr/bin/vim      # vim is the only editor
+export EDITOR=vim               # vim is the only editor
+export VISUAL=vim               # vim is the only editor
+
+export MANPAGER="less -X"
 
 alias idle='while true ; do uname -a ; uptime ; sleep 30 ; done'
 alias openports='sudo lsof -i -P'
@@ -56,12 +65,16 @@ alias today='date +"%A, %B %d, %Y"'
 alias yest='date -v-1d +"%A %B %d, %Y"'
 alias epoch='date +%s'
 
+alias rot13='tr a-zA-Z n-za-mN-ZA-M'
+
+alias badge="tput bel"
+
 # git
+alias g='git'
 alias gd='git diff'
 alias gcl='git clone'
 alias ga='git add'
 alias gall='git add .'
-alias g='git'
 alias get='git'
 alias gst='git status'
 alias gs='git status'
@@ -289,6 +302,33 @@ function surootx() {
         sudo -i
     }
 
+function httpcompression() {
+    encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" |
+    grep '^Content-Encoding:')" &&
+    echo "$1 is encoded using ${encoding#* }" ||
+    echo "$1 is not using any encoding"
+}
+
+function dataurl() {
+    local mimeType=$(file -b --mime-type "$1")
+    if [[ $mimeType == text/* ]]; then
+        mimeType="${mimeType};charset=utf-8"
+    fi
+    echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+function gz() {
+    echo "orig size (bytes): "
+    cat "$1" | wc -c
+    echo "gzipped size (bytes): "
+    gzip -c "$1" | wc -c
+}
+
+function digga() {
+    dig +nocmd "$1" any +multiline +noall +answer
+}
+
+
 # Platform Specific Aliases here
 case $OSTYPE in
     darwin*)
@@ -316,6 +356,10 @@ case $OSTYPE in
         alias bsr='brew search'
         alias binf='brew info'
         alias bdr='brew doctor'
+        alias md5sum='md5'
+        alias sha1sum='shasum'
+        source `brew --prefix git`/etc/bash_completion.d/git-completion.bash
+        complete -o default -o nospace -F _git g
         function pdfman () {
             man -t $1 | open -a /Applications/Preview.app -f
         }
@@ -325,6 +369,41 @@ case $OSTYPE in
         function apprun() {
             open -a $@
         }
+        function note() {
+            local text
+            if [ -t 0 ]; then # argument
+                    text="$1"
+            else # pipe
+                text=$(cat)
+            fi
+            body=$(echo "$text" | sed -E 's|$|<br>|g')
+            osascript >/dev/null <<EOF
+            tell application "Notes"
+                tell account "iCloud"
+                    tell folder "Notes"
+                        make new note with properties {name:"$text", body:"$body"}
+                    end tell
+                end tell
+            end tell
+EOF
+        }
+
+        function remind() {
+            local text
+            if [ -t 0 ]; then
+                text="$1" # argument
+            else
+                text=$(cat) # pipe
+            fi
+            osascript >/dev/null <<EOF
+                    tell application "Reminders"
+                    tell the default list
+                        make new reminder with properties {name:"$text"}
+                        end tell
+                    end tell
+EOF
+            }
+
         ;;
     solaris*)
         export TERM=vt100
