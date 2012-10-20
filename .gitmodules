@@ -1,0 +1,33 @@
+[submodule ".vim/bundle/ctrlp.vim"]
+        path = .vim/bundle/ctrlp.vim
+            url = git://github.com/kien/ctrlp.vim.git
+[submodule ".vim/bundle/gist.vim"]
+        path = .vim/bundle/gist.vim
+            url = git://github.com/mattn/gist-vim.git
+[submodule ".vim/bundle/markdown.vim"]
+        path = .vim/bundle/markdown.vim
+            url = git://github.com/plasticboy/vim-markdown.git
+[submodule ".vim/bundle/powerline.vim"]
+        path = .vim/bundle/powerline.vim
+            url = git://github.com/Lokaltog/vim-powerline.git
+[submodule ".vim/bundle/javascript.vim"]
+        path = .vim/bundle/javascript.vim
+            url = git://github.com/pangloss/vim-javascript.git
+[submodule ".vim/bundle/rails.vim"]
+        path = .vim/bundle/rails.vim
+            url = git://github.com/tpope/vim-rails.git
+[submodule ".vim/bundle/snipmate.vim"]
+        path = .vim/bundle/snipmate.vim
+            url = git://github.com/msanders/snipmate.vim.git
+[submodule ".vim/bundle/surround.vim"]
+        path = .vim/bundle/surround.vim
+            url = git://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/ack.vim"]
+        path = .vim/bundle/ack.vim
+            url = git://github.com/mileszs/ack.vim.git
+[submodule ".vim/bundle/indent-guides.vim"]
+        path = .vim/bundle/indent-guides.vim
+            url = git://github.com/nathanaelkane/vim-indent-guides.git
+[submodule ".vim/bundle/scala.vim"]
+        path = .vim/bundle/scala.vim
+            url = git://github.com/derekwyatt/vim-scala.git
