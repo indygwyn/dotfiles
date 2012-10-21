@@ -347,6 +347,7 @@ case $OSTYPE in
         alias finder='open -a Finder '
         alias textedit='open -a TextEdit'
         alias hex='open -a "Hex Fiend"'
+        alias ldd='otool -L'
         # homebrew
         alias bup='brew update && brew upgrade'
         alias bout='brew outdated'
