@@ -303,7 +303,7 @@ function surootx() {
     }
 
 function httpcompression() {
-    encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" |
+    local encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" |
     grep '^Content-Encoding:')" &&
     echo "$1 is encoded using ${encoding#* }" ||
     echo "$1 is not using any encoding"
@@ -326,6 +326,11 @@ function gz() {
 
 function digga() {
     dig +nocmd "$1" any +multiline +noall +answer
+}
+
+function genpass() {
+    local passchars=${1-8}
+    openssl rand -base64 $passchars | cut -c 1-$passchars
 }
 
 
