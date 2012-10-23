@@ -329,10 +329,20 @@ function digga() {
 }
 
 function genpass() {
-    local passchars=${1-8}
-    openssl rand -base64 $passchars | cut -c 1-$passchars
+    local length=${1-8}
+    if command -v openssl > /dev/null ; then
+        openssl rand -base64 $length | cut -c 1-$length
+    else
+        local MATRIX="HpZldxsG47f0W9gNaLRTQjhUwnvPtD5eAzr6k@EyumB3@K^cbOCV+SFJoYi2q@MIX81"
+        local PASS=""
+        local n=1
+        while [ ${n} -le $length ]; do
+            PASS="$PASS${MATRIX:$(($RANDOM%${#MATRIX})):1}"
+            n=$(($n + 1))
+        done
+        echo $PASS
+    fi
 }
-
 
 # Platform Specific Aliases here
 case $OSTYPE in
