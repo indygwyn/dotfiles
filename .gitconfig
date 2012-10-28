@@ -1,25 +1,36 @@
 [core]
-	quotepath = false
-	excludesfile = /Users/twh/.gitignore
-	attributesfile = /Users/twh/.gitattributes
-	whitespace = trailing-space,space-before-tab
+    quotepath = false
+    excludesfile = /Users/twh/.gitignore
+    attributesfile = /Users/twh/.gitattributes
+    whitespace = trailing-space,space-before-tab
 [user]
-	name = Thomas W. Holt Jr.
-	email = EMAIL
+    name = Thomas W. Holt Jr.
+    email = EMAIL
 [github]
-	user = username
-	token = TOKEN
+    user = username
+    token = TOKEN
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+    trustExitCode = true
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain
 [color]
-	ui = auto
+    ui = auto
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
 [diff]
-	mnemonicprefix = true
+    mnemonicprefix = true
 [merge]
-	stat = true
+    stat = true
+[alias]
+    st = status
+    di = diff
+    co = checkout
+    ci = commit
+    br = branch
+    sta = stash
