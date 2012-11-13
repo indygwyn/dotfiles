@@ -348,7 +348,8 @@ function genpass() {
 case $OSTYPE in
     darwin*)
         alias eject='hdiutil eject'
-        alias apinfo='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I'
+        alias apinfo='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I'
+        alias wifi='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s'
         alias cpwd='pwd|xargs echo -n|pbcopy'
         alias flushdns='dscacheutil -flushcache'
         alias locate='mdfind -name'
