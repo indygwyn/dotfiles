@@ -34,3 +34,5 @@
     ci = commit
     br = branch
     sta = stash
+[push]
+	default = simple
