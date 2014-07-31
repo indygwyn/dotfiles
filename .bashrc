@@ -317,6 +317,11 @@ function dataurl() {
     echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 
+function 64font() {
+    openssl base64 -in $1 | awk -v ext="${1#*.}" '{ str1=str1 $0 }END{ print "src:url(\"data:font/"ext";base64,"str1"\")  format(\"woff\");" }'|pbcopy
+    echo "$1 encoded as font and copied to clipboard"
+}
+
 function gz() {
     echo "orig size (bytes): "
     cat "$1" | wc -c
@@ -403,6 +408,16 @@ case $OSTYPE in
                 end tell
             end tell
 EOF
+        }
+
+        # This retrieves unread email for the current user using dscl to get the gmail address and keychain to get the password
+        function gmail() {
+            user=`dscl . -read /Users/$(whoami)|grep "EMailAddress:"|sed 's/^EMailAddress: //'`
+            pass=$(security find-internet-password -w -a "$user" -s "accounts.google.com")
+            curl -u "$user:$pass" --silent "https://mail.google.com/mail/feed/atom"| perl -ne '
+                print "Subject: $1 " if /<title>(.+?)<\/title>/ && $title++;
+                print "(from $1)\n" if /<email>(.+?)<\/email>/;
+                '
         }
 
         function remind() {

@@ -1,5 +1,8 @@
 set background=dark         " must come before colorscheme
-colorscheme solarized   " https://github.com/altercation/vim-colors-solarized
+"colorscheme solarized   " https://github.com/altercation/vim-colors-solarized
+colorscheme jellybeans
+
+au FileType javascript set dictionary+=$HOME/.vim/dict/node.dict
 
 let os=substitute(system('uname'), '\n', '', '')
 if has("gui_running")
