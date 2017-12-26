@@ -1,20 +1,3 @@
-" Modeline and Notes {
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
-"
-"                    __ _ _____              _
-"         ___ _ __  / _/ |___ /      __   __(_)_ __ ___
-"        / __| '_ \| |_| | |_ \ _____\ \ / /| | '_ ` _ \
-"        \__ \ |_) |  _| |___) |_____|\ V / | | | | | | |
-"        |___/ .__/|_| |_|____/        \_/  |_|_| |_| |_|
-"            |_|
-"
-"   This is the personal .vimrc file of Steve Francia.
-"   While much of it is beneficial for general use, I would
-"   recommend picking out the parts you want and understand.
-"
-"   You can find me at http://spf13.com
-" }
-
 " Environment {
     " Basics {
         set nocompatible        " must be first line
@@ -608,3 +591,15 @@ endfunction
         endif
     endif
 " }
+
+let os=substitute(system('uname'), '\n', '', '')
+if has("gui_running")
+    if os == 'Darwin' || os =='Mac'
+        set guifont=Source\ Code\ Pro:h13
+    elseif os == 'Linux'
+        set guifont=Inconsolata\ 12
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+endif
+
